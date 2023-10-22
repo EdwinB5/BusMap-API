@@ -34,14 +34,6 @@ class BusBase(BaseModel):
     tiempo_viaje: float
     indice_ruta: int
 
-class SimulacionBase(BaseModel):
-    multiplicador: int
-    maximo_viaje: int
-    aumento_tiempo: int
-    aumento_real: int
-    tiempo: datetime.datetime
-    estado: str
-
 class MunicipioBusBase(BaseModel):
     id_municipio: int
     id_bus: int
@@ -71,8 +63,16 @@ class Bus(BusBase):
     class Config:
         orm_mode = True
 
+class SimulacionBase(BaseModel):
+    multiplicador: int | None = None
+    maximo_viaje: int | None = None
+    aumento_tiempo: int | None = None
+    aumento_real: int | None = None
+    tiempo: datetime.datetime | None = None
+    estado: str | None = None
+    
 class Simulacion(SimulacionBase):
-    id: int
+    id: int | None = None
 
     class Config:
         orm_mode = True
