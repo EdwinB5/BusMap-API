@@ -32,7 +32,6 @@ class Ruta(Base):
     municipio_destino = Column(Integer, ForeignKey('municipio.id'), nullable=False)
 
 
-
 class Bus(Base):
     __tablename__ = "bus"
 

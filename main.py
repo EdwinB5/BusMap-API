@@ -1,11 +1,11 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.routers import municipio, simulacion
 
 #models.Base.metadata.create_all(bind=engine)
 #models.Base.metadata.drop_all(engine)
 
-app = FastAPI()
+app = FastAPI(title='BusMap API')
 
 origins = ["*"]
 
