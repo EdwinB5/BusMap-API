@@ -5,7 +5,33 @@ from src.routers import municipio, simulacion, departamento, bus
 #models.Base.metadata.create_all(bind=engine)
 #models.Base.metadata.drop_all(engine)
 
-app = FastAPI(title='BusMap API')
+description = """
+BusAPI Map API for recovery database info
+"""
+
+tags_metadata = [
+    {
+        "name": "municipios",
+        "description": "Operations with municipios. The **Municipios** logic is also here."
+    },
+    {
+        "name": "simulacion",
+        "description": "Operations with simulacion. The **Simulacion** logic is also here."
+    },
+    {
+        "name": "departamento",
+        "description": "**Departamento** info"
+    },
+    {
+        "name": "bus",
+        "description": "Operations with buses. The **Bus** logic is also here."
+    },
+]
+
+app = FastAPI(title='BusMap API', description=description, license_info={
+    "name": "MIT",
+    "url": "http://kb.mit.edu/confluence/x/NwmVCQ",
+}, openapi_tags=tags_metadata)
 
 origins = ["*"]
 

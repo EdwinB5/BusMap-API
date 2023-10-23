@@ -38,16 +38,18 @@ class BusBase(BaseModel):
 class BusCreate(BaseModel):
     fecha_salida: datetime.datetime
 
+class BusUpdate(BaseModel):
+    fecha_salida: datetime.datetime
+
 class MunicipioBusBase(BaseModel):
     id_municipio: int
     id_bus: int
-
 
 class Municipio(MunicipioBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class RutaCreate(RutaBase):
     pass
@@ -56,13 +58,13 @@ class Ruta(RutaBase):
     id: int | None = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Bus(BusBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class SimulacionBase(BaseModel):
     multiplicador: int | None = None
@@ -76,7 +78,7 @@ class Simulacion(SimulacionBase):
     id: int | None = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class MunicipioBusCreate(MunicipioBusBase):
     pass
