@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.routers import municipio, simulacion, departamento, bus
+from fastapi.openapi.docs import get_swagger_ui_html
 
 #models.Base.metadata.create_all(bind=engine)
 #models.Base.metadata.drop_all(engine)
@@ -31,7 +32,7 @@ tags_metadata = [
 app = FastAPI(title='BusMap API', description=description, license_info={
     "name": "MIT",
     "url": "http://kb.mit.edu/confluence/x/NwmVCQ",
-}, openapi_tags=tags_metadata)
+}, openapi_tags=tags_metadata, openapi_url="/api/openapi.json")
 
 origins = ["*"]
 
@@ -51,6 +52,10 @@ app.include_router(bus.router_bus)
 @app.get("/api/")
 async def root():
     return {"message": "BusMap API - Welcome"}
+
+@app.get("/api/docs")
+async def custom_swagger():                                                                                                                      
+    return get_swagger_ui_html(openapi_url="/api/openapi.json", title="BusMap Api Docs")
 
 
 
