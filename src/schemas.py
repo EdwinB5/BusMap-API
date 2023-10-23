@@ -22,17 +22,17 @@ class RutaBase(BaseModel):
     municipio_destino: int
 
 class BusBase(BaseModel):
-    localizacion: str
-    estado: str
-    fecha_salida: str
-    fecha_entrada: str
-    fecha_disponible: str
-    cupos_maximos: int
-    cupos_actuales: int
-    velocidad_promedio: int
-    distancia_actual: float
-    tiempo_viaje: float
-    indice_ruta: int
+    localizacion: Optional[List[float]] | None = None
+    estado: str | None = None
+    fecha_salida: datetime.datetime | None = None
+    fecha_entrada: datetime.datetime | None = None
+    fecha_disponible: datetime.datetime | None = None
+    cupos_maximos: int | None = None
+    cupos_actuales: int | None = None
+    velocidad_promedio: int | None = None
+    distancia_actual: float | None = None
+    tiempo_viaje: float | None = None
+    indice_ruta: int | None = None
 
 class MunicipioBusBase(BaseModel):
     id_municipio: int
@@ -49,7 +49,7 @@ class RutaCreate(RutaBase):
     pass
 
 class Ruta(RutaBase):
-    id: int
+    id: int | None = None
 
     class Config:
         orm_mode = True

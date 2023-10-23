@@ -36,7 +36,7 @@ class Bus(Base):
     __tablename__ = "bus"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    localizacion = Column(Geometry('POINT'), nullable=False)
+    localizacion = Column(Geometry('POINT', 4326), nullable=False)
     estado = Column(String, nullable=False)
     fecha_salida = Column(DateTime)
     fecha_entrada = Column(DateTime)
@@ -66,5 +66,5 @@ class Simulacion(Base):
 class MunicipioBus(Base):
     __tablename__ = "municipio_bus"
 
-    id_municipio = Column(Integer, ForeignKey('municipio.id'), primary_key=True)
-    id_bus = Column(Integer, ForeignKey('bus.id'), primary_key=True)
+    id_municipio = Column(Integer, ForeignKey('municipio.id'), primary_key=True, nullable=True)
+    id_bus = Column(Integer, ForeignKey('bus.id'), primary_key=True, nullable=True)

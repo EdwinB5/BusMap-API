@@ -2,9 +2,6 @@ import json
 from src.utils.geojson import departamento_geojson
 
 class DepartamentoController:
-    def __init__(self):
-        pass
-    
     def read_json(self, file_path):
         with open(file_path, "r") as file:
             data = json.load(file)

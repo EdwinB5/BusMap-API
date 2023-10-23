@@ -1,7 +1,6 @@
 from src import models
 from src.utils import geometry
 from src.utils.geojson import municipios_geojson, municipio_geojson
-from src.models import Municipio
 
 class MunicipioController:
     def __init__(self, session):
@@ -25,7 +24,7 @@ class MunicipioController:
 
     def format_municipios(self, municipios):
         results = {}
-        if isinstance(municipios, Municipio):
+        if isinstance(municipios, models.Municipio):
             municipios.localizacion = geometry.wkt_str_to_point(geometry.convert_wkb_to_string(municipios.localizacion))
             municipios.extension = geometry.wkt_to_poligons(geometry.convert_wkb_to_string(municipios.extension))
             results = municipio_geojson(municipios)
