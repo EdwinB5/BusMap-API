@@ -4,16 +4,16 @@ def municipios_geojson(municipios):
     for municipio in municipios:
         geometry = {
             "type": "GeometryCollection",
-            "coordinates": {
-                "Point": {
+            "geometries": [
+                {
                     "type": "Point",
                     "coordinates": municipio.localizacion
                 },
-                "MultiPolygon": {
+                {
                     "type": "MultiPolygon",
                     "coordinates": municipio.extension
                 }
-            }
+            ]
         }
         properties = {
             "nombre": municipio.nombre,
@@ -39,17 +39,16 @@ def municipios_geojson(municipios):
 def municipio_geojson(municipio):
     geometry = {
             "type": "GeometryCollection",
-            "coordinates": {
-                "Point": {
+            "geometries": [
+                {
                     "type": "Point",
                     "coordinates": municipio.localizacion
                 },
-                "MultiPolygon": {
+                {
                     "type": "MultiPolygon",
                     "coordinates": municipio.extension
-                }
+                }]
             }
-        }
     
     properties = {
         "nombre": municipio.nombre,
