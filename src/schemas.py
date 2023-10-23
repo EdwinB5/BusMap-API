@@ -33,6 +33,10 @@ class BusBase(BaseModel):
     distancia_actual: float | None = None
     tiempo_viaje: float | None = None
     indice_ruta: int | None = None
+    fk_ruta: int | None = None
+
+class BusCreate(BaseModel):
+    fecha_salida: datetime.datetime
 
 class MunicipioBusBase(BaseModel):
     id_municipio: int
@@ -53,9 +57,6 @@ class Ruta(RutaBase):
 
     class Config:
         orm_mode = True
-
-class BusCreate(BusBase):
-    pass
 
 class Bus(BusBase):
     id: int

@@ -28,3 +28,8 @@ def wkt_to_poligons(wkt_str):
             anillos.append(list(anillo))
         poligonos.append(anillos)
     return poligonos
+
+
+def array_to_linestring(array):
+    linestring = LineString(array)
+    return str(linestring)

@@ -23,12 +23,12 @@ async def read_bus_municipio(municipio_id: int = Query(None), db: Session = Depe
     
     return results
 
-@router_bus.post("/api/bus/register", tags=["bus"], response_model=schemas.BusCreate)
-async def register_bus(municipio_id: int, municipio_origen: int, bus: schemas.BusCreate, db: Session = Depends(get_db)):
+@router_bus.post("/api/bus/register", tags=["bus"], response_model=schemas.BusBase)
+async def register_bus(municipio_origen: int, municipio_destino: int, bus: schemas.BusCreate, db: Session = Depends(get_db)):
     buses = BusController(db)
-    results = buses.register_bus(municipio_id, municipio_origen, bus)
-    
+    results = buses.register_bus(municipio_origen, municipio_destino, bus)
+
     if results is None:
-        raise HTTPException(status_code=400, detail=f"Aparcadero on municipio_id[{municipio_id}] is full")
+        raise HTTPException(status_code=400, detail=f"Aparcadero on municipio_id[{municipio_origen}] is full")
     
     return results

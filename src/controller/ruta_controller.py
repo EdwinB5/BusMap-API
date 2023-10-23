@@ -27,19 +27,20 @@ class RutaController:
 
         return ruta 
 
-    def get_point(self, municipio):
+    def get_point(self, municipio_id):
+        municipio = self.db.query(models.Municipio).filter(models.Municipio.id == municipio_id).first()
         municipio_localizacion = geometry.wkt_str_to_point(geometry.convert_wkb_to_string(municipio.localizacion))
         return municipio_localizacion
     
     def create_ruta(self, municipio_origen, municipio_destino, data):
         distancia_total = data['routes'][0]['distance']
-        ruta_trazada = data['routes'][0]['geometry']['coordinates']
+        ruta_trazada = geometry.array_to_linestring(data['routes'][0]['geometry']['coordinates'])
         distancias = data['routes'][0]['legs'][0]['annotation']['distance']
 
-        ruta = models.Ruta(distancia_total, ruta_trazada, distancias, municipio_origen, municipio_destino)
+        ruta = models.Ruta(distancia_total=distancia_total, ruta_trazada=ruta_trazada, distancias=distancias, municipio_origen=municipio_origen, municipio_destino=municipio_destino)
         
         self.db.add(ruta)
         self.db.commit()
-        self.refresh(ruta)
+        self.db.refresh(ruta)
 
         return ruta
