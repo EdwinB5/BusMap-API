@@ -10,7 +10,7 @@ def municipios_geojson(municipios):
                     "coordinates": municipio.localizacion
                 },
                 {
-                    "type": "MultiPolygon",
+                    "type": "Polygon",
                     "coordinates": municipio.extension
                 }
             ]
@@ -45,7 +45,7 @@ def municipio_geojson(municipio):
                     "coordinates": municipio.localizacion
                 },
                 {
-                    "type": "MultiPolygon",
+                    "type": "Polygon",
                     "coordinates": municipio.extension
                 }]
             }
@@ -79,7 +79,7 @@ def departamento_geojson(departamento):
                 "nombre": departamento["departamento"],  
             },
             "geometry": {
-                "type": "MultiPolygon",
+                "type": "Polygon",
                 "coordinates": departamento["extension"],
             }
         }

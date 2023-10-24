@@ -54,6 +54,7 @@ class Bus(Base):
 
     indice_ruta = Column(Integer, default=0)
     fk_ruta = Column(Integer, ForeignKey('ruta.id'))
+    distancia_teorica = Column(Integer, default=0)
 
     __table_args__ = {'extend_existing': True}
 
