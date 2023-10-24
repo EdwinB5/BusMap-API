@@ -2,6 +2,7 @@ from src import models, schemas
 from src.controller.ruta_controller import RutaController
 from src.utils import geometry
 import random
+from datetime import datetime
 
 class BusController:
     def __init__(self, session):
@@ -37,14 +38,14 @@ class BusController:
 
                 bus_localizacion = geometry.convert_wkb_to_string(municipio.localizacion)
                 estado = "aparcado"
-                fecha_salida = bus.fecha_salida
+                fecha_salida = datetime.strptime(bus.fecha_salida, "%Y-%m-%d %H:%M:%S")
                 cupos_maximos = random.randint(20, 40)
                 cupos_actuales = random.randint(1, cupos_maximos)
                 velocidad_promedio = random.randint(60, 80)
 
                 fk_ruta = ruta.get_ruta(municipio_origen, municipio_destino)
 
-                db_bus = models.Bus(localizacion=bus_localizacion, estado=estado, fecha_salida=fecha_salida, cupos_maximos=cupos_maximos, cupos_actuales=cupos_actuales, velocidad_promedio=velocidad_promedio, fk_ruta=fk_ruta)
+                db_bus = models.Bus(localizacion=bus_localizacion, estado=estado, fecha_salida=fecha_salida.isoformat(), cupos_maximos=cupos_maximos, cupos_actuales=cupos_actuales, velocidad_promedio=velocidad_promedio, fk_ruta=fk_ruta)
                 self.db.add(db_bus)
                 self.db.commit()
 
