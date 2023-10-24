@@ -44,7 +44,7 @@ class BusController:
 
                 fk_ruta = ruta.get_ruta(municipio_origen, municipio_destino)
 
-                db_bus = models.Bus(localizacion=bus_localizacion, estado=estado, fecha_salida=fecha_salida, fecha_entrada=fecha_entrada, cupos_maximos=cupos_maximos, cupos_actuales=cupos_actuales, velocidad_promedio=velocidad_promedio, fk_ruta=fk_ruta)
+                db_bus = models.Bus(localizacion=bus_localizacion, estado=estado, fecha_salida=fecha_salida, cupos_maximos=cupos_maximos, cupos_actuales=cupos_actuales, velocidad_promedio=velocidad_promedio, fk_ruta=fk_ruta)
                 self.db.add(db_bus)
                 self.db.commit()
 
