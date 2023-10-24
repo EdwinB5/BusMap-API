@@ -85,12 +85,12 @@ class BusController:
         bus.velocidad_promedio = random.randint(60, 80)
 
         # Bus Municipio update
-        bus_municipio = self.db.query(models.MunicipioBus).filter(models.MunicipioBus.id_bus == bus_id).first()
-        bus_municipio.id_municipio = municipio_origen
+        #bus_municipio = self.db.query(models.MunicipioBus).filter(models.MunicipioBus.id_bus == bus_id).first()
+        #bus_municipio.id_municipio = municipio_origen
             
         self.db.commit()
         self.db.refresh(bus)
-        self.db.refresh(bus_municipio)
+        #self.db.refresh(bus_municipio)
 
         return self.format_buses(bus)[0]
 
