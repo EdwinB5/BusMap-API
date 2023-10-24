@@ -38,7 +38,6 @@ class BusController:
                 bus_localizacion = geometry.convert_wkb_to_string(municipio.localizacion)
                 estado = "aparcado"
                 fecha_salida = bus.fecha_salida
-                fecha_entrada = simulacion.tiempo
                 cupos_maximos = random.randint(20, 40)
                 cupos_actuales = random.randint(1, cupos_maximos)
                 velocidad_promedio = random.randint(60, 80)
