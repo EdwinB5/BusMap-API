@@ -2,7 +2,7 @@ from src import models, schemas
 from src.controller.ruta_controller import RutaController
 from src.utils import geometry
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class BusController:
     def __init__(self, session):
@@ -25,7 +25,7 @@ class BusController:
 
         return self.format_buses(results)
 
-    def register_bus(self, municipio_origen: int, municipio_destino: int, bus: schemas.BusCreate):
+    def register_bus(self, municipio_origen: int, municipio_destino: int):
         result = None
 
         municipio = self.db.query(models.Municipio).filter(models.Municipio.id == municipio_origen).first()
@@ -38,7 +38,8 @@ class BusController:
 
                 bus_localizacion = geometry.convert_wkb_to_string(municipio.localizacion)
                 estado = "aparcado"
-                fecha_salida = simulacion.tiempo
+                fecha_salida = self.add_aparcadero_time(simulacion.tiempo, 30)
+                print(fecha_salida)
                 cupos_maximos = random.randint(20, 40)
                 cupos_actuales = random.randint(1, cupos_maximos)
                 velocidad_promedio = random.randint(60, 80)
@@ -67,8 +68,9 @@ class BusController:
 
         return result
 
-    def routing_bus(self, bus_id: int, municipio_origen:int , municipio_destino: int, bus_update: schemas.BusUpdate):
+    def routing_bus(self, bus_id: int, municipio_origen:int , municipio_destino: int):
         bus = self.db.query(models.Bus).filter(models.Bus.id == bus_id).first()
+        simulacion = self.db.query(models.Simulacion).first()
         if bus is None: return None
 
         ruta = RutaController(self.db)
@@ -76,8 +78,9 @@ class BusController:
 
         # Bus Update fields
         bus.fk_ruta = ruta_update
-        bus.fecha_salida = bus_update.fecha_salida
+        bus.fecha_salida = self.add_aparcadero_time(simulacion.tiempo, 30)
         bus.estado = "aparcado"
+        # bus.fecha_entrada = simulacion.tiempo
         bus.cupos_actuales = random.randint(1, bus.cupos_maximos)
         bus.velocidad_promedio = random.randint(60, 80)
 
@@ -104,4 +107,8 @@ class BusController:
             results = [buses]
         
         return results
+    
+    def add_aparcadero_time(self, fecha, minutos):
+        fecha_salida = datetime.strptime(str(fecha), "%Y-%m-%d %H:%M:%S%z")
+        return fecha_salida + timedelta(minutes=minutos)
     

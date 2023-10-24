@@ -24,12 +24,12 @@ async def read_bus_municipio(municipio_id: int = Query(None), db: Session = Depe
     return results
 
 @router_bus.post("/api/bus/register", tags=["bus"], response_model=schemas.Bus)
-async def register_bus(municipio_origen: int, municipio_destino: int, bus: schemas.BusCreate, db: Session = Depends(get_db)):
+async def register_bus(municipio_origen: int, municipio_destino: int, db: Session = Depends(get_db)):
     if municipio_origen == municipio_destino:
         raise HTTPException(status_code=400, detail=f"Aparcadero's can't be the same")
 
     buses = BusController(db)
-    results = buses.register_bus(municipio_origen, municipio_destino, bus)
+    results = buses.register_bus(municipio_origen, municipio_destino)
 
     if isinstance(results, dict):
         raise HTTPException(status_code=404, detail=f"Municipio's not found. More details: {str(results['error'])}")
@@ -40,9 +40,9 @@ async def register_bus(municipio_origen: int, municipio_destino: int, bus: schem
     return results
 
 @router_bus.patch("/api/bus/enrutar", tags=["bus"], response_model=schemas.Bus)
-async def routing_bus(bus_id: int, municipio_origen: int, municipio_destino: int, bus: schemas.BusUpdate, db: Session = Depends(get_db)):
+async def routing_bus(bus_id: int, municipio_origen: int, municipio_destino: int, db: Session = Depends(get_db)):
     buses = BusController(db)
-    results = buses.routing_bus(bus_id, municipio_origen, municipio_destino, bus)
+    results = buses.routing_bus(bus_id, municipio_origen, municipio_destino)
 
     if results is None:
         raise HTTPException(status_code=400, detail=f"Bus on bus_id[{bus_id}] not found")
